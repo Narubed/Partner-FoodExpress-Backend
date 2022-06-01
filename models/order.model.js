@@ -8,7 +8,7 @@ const orderSchema = new mongoose.Schema({
   order_partner_status: { type: String, required: true, default: "รอชำระเงิน" },
   order_partner_image: { type: String, required: false, default: "" },
   order_partner_total: { type: Number, required: true },
-  order_partner_timestamp: { type: Date, required: true, default: new Date() },
+  order_partner_timestamp: { type: Date, required: true, default: Date.now() },
 });
 
 orderSchema.methods.generateAuthToken = function () {

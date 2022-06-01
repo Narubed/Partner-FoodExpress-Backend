@@ -15,7 +15,7 @@ const orderDetailSchema = new mongoose.Schema({
   odd_product_currency: { type: String, required: true },
   odd_product_unitkg: { type: Number, required: true },
   odd_cutarount_id: { type: String, required: false, default: "" },
-  odd_timestamp: { type: Date, required: true, default: new Date() },
+  odd_timestamp: { type: Date, required: true, default: Date.now() },
 });
 
 orderDetailSchema.methods.generateAuthToken = function () {
