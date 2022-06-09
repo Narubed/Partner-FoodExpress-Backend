@@ -1,7 +1,10 @@
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const fs = require("fs");
-const { OrderDetail, validate } = require("../models/order-detail.model");
+const {
+  Wallet,
+  validate,
+} = require("../../models/wallet-partner/wallet-partner.model");
 
 exports.create = async (req, res) => {
   console.log(req.body);
@@ -12,7 +15,7 @@ exports.create = async (req, res) => {
       return res
         .status(400)
         .send({ message: error.details[0].message, status: false });
-    const result = await new OrderDetail({
+    const result = await new Wallet({
       ...req.body,
     }).save();
     console.log(result._id);
@@ -27,7 +30,7 @@ exports.create = async (req, res) => {
 };
 exports.findAll = async (req, res) => {
   try {
-    OrderDetail.find()
+    Wallet.find()
       .then(async (data) => {
         res.send({ data, message: "success", status: true });
       })
@@ -43,7 +46,7 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  OrderDetail.findById(id)
+  Wallet.findById(id)
     .then((data) => {
       if (!data)
         res
@@ -59,26 +62,9 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.findOrderOne = (req, res) => {
+exports.findOnePartner = (req, res) => {
   const id = req.params.id;
-  OrderDetail.find({ odd_order_id: id })
-    .then((data) => {
-      if (!data)
-        res
-          .status(404)
-          .send({ message: "ไม่สามารถหารายงานนี้ได้", status: false });
-      else res.send({ data, status: true });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "มีบางอย่างผิดพลาด",
-        status: false,
-      });
-    });
-};
-exports.findCutArountOne = (req, res) => {
-  const id = req.params.id;
-  OrderDetail.find({ odd_cutarount_id: id })
+  Wallet.find({ wallet_partner_id: id })
     .then((data) => {
       if (!data)
         res
@@ -97,7 +83,7 @@ exports.findCutArountOne = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  OrderDetail.findByIdAndRemove(id, { useFindAndModify: false })
+  Wallet.findByIdAndRemove(id, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -118,7 +104,9 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 exports.update = async (req, res) => {
+  console.log(req.body);
   try {
     if (!req.body) {
       return res.status(400).send({
@@ -126,7 +114,7 @@ exports.update = async (req, res) => {
       });
     }
     const id = req.params.id;
-    OrderDetail.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    Wallet.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
       .then((data) => {
         if (!data) {
           res.status(404).send({

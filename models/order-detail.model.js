@@ -14,6 +14,8 @@ const orderDetailSchema = new mongoose.Schema({
   odd_product_amount: { type: Number, required: true },
   odd_product_currency: { type: String, required: true },
   odd_product_unitkg: { type: Number, required: true },
+  odd_percent_nba: { type: Number, required: true, default: 0 },
+  odd_percent_service: { type: Number, required: true, default: 0 },
   odd_cutarount_id: { type: String, required: false, default: "" },
   odd_timestamp: { type: Date, required: true, default: Date.now() },
 });
@@ -54,8 +56,11 @@ const validate = (data) => {
       .precision(2)
       .required()
       .label("odd_product_unitkg"),
+    odd_percent_nba: Joi.number().precision(3).label("odd_percent_nba"),
+    odd_percent_service: Joi.number().precision(3).label("odd_percent_service"),
+
     // odd_cutarount_id: Joi.string().required().label("_id ผู้ใช่"),
-    // odd_timestamp: Joi.string().required().label("_id ผู้ใช่"),
+    odd_timestamp: Joi.date().raw().default(Date.now()),
   });
   return schema.validate(data);
 };

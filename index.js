@@ -11,6 +11,8 @@ const connection = require("./config/db");
 
 const order = require("./rounts/order");
 const order_detail = require("./rounts/order-detail");
+const wallet_partner = require("./rounts/wallet-partner");
+const cut_arount_order = require("./rounts/cut-arount-order");
 
 connection();
 
@@ -21,6 +23,8 @@ app.use(cors());
 // routes
 app.use("/api/partner-foodexpress/order", order);
 app.use("/api/partner-foodexpress/order_detail", order_detail);
+app.use("/api/partner-foodexpress/wallet_partner", wallet_partner);
+app.use("/api/partner-foodexpress/cut_arount_order", cut_arount_order);
 
 const port = process.env.PORT || 8090;
 app.listen(port, console.log(`Listening on port ${port}...`));

@@ -26,7 +26,7 @@ const validate = (data) => {
     order_partner_status: Joi.string().default("รอชำระเงิน"),
     // order_partner_image: Joi.string().default(""),
     order_partner_total: Joi.number().precision(2),
-    // order_partner_timestamp: Joi.string().required().label("order_partner_timestamp"),
+    order_partner_timestamp: Joi.date().raw().default(Date.now()),
   });
   return schema.validate(data);
 };
